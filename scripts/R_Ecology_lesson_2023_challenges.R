@@ -37,6 +37,7 @@ char_logical <- c("a", "b", "c", TRUE)
 
 tricky <- c(1, 2, 3, "4")
 
+
 # . -----------------------------------------------------------------------
 
 
@@ -58,6 +59,7 @@ tricky <- c(1, 2, 3, "4")
 
 heights <- c(63, 69, 60, 65, NA, 68, 61, 70, 61, 59, 64, 69, 63, 63, NA, 72, 65, 64, 70, 63, 65)
 
+heights_no_na <- mean(heights,na.rm= TRUE)
 
 # 4.2. Calculate the median (using the median() function) of the new heights_no_na vector.
 

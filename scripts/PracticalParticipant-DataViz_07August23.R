@@ -122,7 +122,7 @@ ggplot(data=gapminder, aes(x=continent, fill=continent)) + #adding the aesthetic
 #2.  plot GDP on a log scale
 
 ggplot(data=gapminder, aes(x=gdpPercap,fill=continent) + 
-  geom_density(size=1.5, alpha=0.5)
+  geom_density(size=1.5, alpha=0.5))
 
 ggplot(data=gapminder, aes(x=log10(gdpPercap),fill=continent)) + 
   geom_density(size=1.5, alpha=0.5)
@@ -138,6 +138,10 @@ ggplot(data=gapminder, aes(x=log10(gdpPercap),fill=continent)) +
 #4. Do the same, but plot GDP on a log scale
 
 
+
+
+
+
 #***************1.5D: Layers & Time series plots***************
 #How life expectancy change with GDP per country?
 #China for example
@@ -148,21 +152,42 @@ china + geom_line()
 
 china + geom_line() + geom_point()  #adding points to data values
 
-china + geom_line(color="lightblue") + geom_point(color="violetred") #adding some colors
+china + geom_line(color="lightblue") + geom_point(color="violetred") #adding some colors to  points and the line
 
 #what happens if we use:
 china + geom_point(color="violetred") + geom_line(color="lightblue")
 
-china + geom_line() + geom_point(aes(color=year)) #color the point by year
+china + geom_line() + geom_point(aes(color=year)) #color the point by year #define the easthetics for each layer
 china + geom_line() + geom_point(aes(color=year))+ scale_color_gradientn(colours = rainbow(5)) #with a rainbow
 china + geom_line() + geom_point() + aes(color=year) #coloring both point and line
 china + geom_line() + geom_point() + aes(color=year)+ scale_color_gradientn(colours = rainbow(5)) #both with rainbow shade
 
 
-#*******YOUR TURN**********
+#*******Challenge3**********
 #1. Make a plot of lifeExp vs gdpPercap for China and India, with both lines and points
 
+india <- ggplot(subset(gapminder, country == "India"), aes(x=gdpPercap, y=lifeExp))
+
+india + geom_line()
+india + geom_line() + geom_point() 
+china + geom_line() + geom_point() 
+
+china_india<- ggplot(subset(gapminder, country == "China" | country == "India"),
+                     aes(x=gdpPercap, y=lifeExp))
+
+china_india + geom_line() + geom_point() 
+
 #How has life expectancy changed over time? 
+#plot line chart for each year
+ 
+
+ggplot(gapminder, aes(x=year,  y=lifeExp, group=country)) +
+         geom_line() 
+  ggplot(gapminder, aes(x=year, y=lifeExp, group=country, color=continent)) +
+           geom_line() 
+  ggplot(gapminder, aes(x=year,  y=lifeExp, group=country, color=continent)) +
+           geom_line(alpha = 0.5) 
+
 #by plotting a line for each country over year
 
 
@@ -201,9 +226,11 @@ ggplot(gapyear, aes(x=year, y=lifeExp, color=continent)) +  #using a loess smoot
   geom_smooth(aes(fill=continent), method="loess")
 
 
+
+
 #***************2D: Scatterplots***************
 
-#explore life expentancy by continent
+#explore relationshp of life expentancy by continent
 gm_2007 <- subset(gapminder, year==2007) #filtering data by picking those of 2007 
 ggplot(gm_2007, aes(y=lifeExp, x=continent)) + geom_point()
 ggplot(gm_2007, aes(y=lifeExp, x=continent)) +
@@ -255,6 +282,9 @@ plt + geom_point(aes(size = pop), alpha = 0.5) +  #changing colors shade
   theme_bw()
 
 
+
+
+
 #***********GOING FURTHER1*************
 #Explorinf gdp versus life expectancy in 2007 with highlighting the larger countries
 
@@ -276,6 +306,9 @@ ggplot(gm_2007) +
   theme(legend.position = "top",  # place legend at top and grey axis lines
         axis.line = element_line(color = "grey85"),
         axis.ticks = element_line(color = "grey85"))
+
+
+
 
 
 #***********GOING FURTHER2*************
