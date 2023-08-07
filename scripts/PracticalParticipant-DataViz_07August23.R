@@ -65,13 +65,15 @@ ggplot(data=gapminder, aes(x=lifeExp, fill=continent)) + #adding the aesthetic f
 
 
 #***************boxplots and other visual summaries***************more used for statistical analysis
-gap1 <- ggplot(data=gapminder, aes(x=continent, y=lifeExp, fill=continent)) #change the aesthetic to show continent on one axis, and life expectancy (lifeExp) on the other.
+gap1 <- ggplot( data=gapminder, aes(x=continent, y=lifeExp, fill=continent)) #change the aesthetic to show continent on one axis, and life expectancy (lifeExp) on the other.
 gap1 +
   geom_boxplot(outlier.size=2) #add a boxplot layer
 
 
 
-#*******Challenge**********
+
+
+#*******Challenge1**********
 #1. Remove the legend from this plot
 gap1 <- ggplot(data=gapminder, aes(x=continent, y=lifeExp, fill=continent)) #change the aesthetic to show continent on one axis, and life expectancy (lifeExp) on the other.
 gap1 <- gap1 +
@@ -79,12 +81,19 @@ gap1 <- gap1 +
   guides(fill="none")
 #2. Also, make the plot horizontal
   gap1 + coord_flip()
-#3. Instead of a boxplot, try geom_violin()
+#3. Instead of a box plot, try geom_violin
+  gap2 <- gap1 + geom_violin()
+  gap2
+  
 
+  
+  
+  
 
 #********Effect ordering
 #use the dplyr "pipe" notation (%>%) to send the gapminder data to the dplyr:;mutate() function, and within that, 
 #reorder() the continents by their median life expectancy
+library(dplyr) # data manipulation
 gapminder %>% 
   mutate(continent = reorder(continent, lifeExp, FUN=median))
 
@@ -97,13 +106,34 @@ gapminder %>% #piping the result of this right into ggplot
 ggplot(data=gapminder, aes(x=gdpPercap)) + 
   geom_density() #distribution of gdpPercap with the unconditional distribution
 
-#*******YOUR TURN**********
+#*******Challenge2**********
 #1. As we did for lifeExp plot the distributions separately for each continent
+
+ggplot(data=gapminder, aes(x=continent)) + #plotting the continuous variable lifeExp
+  geom_density()   # calculate and plot the smoothed frequency distribution of lifeExp
+
+ggplot(data=gapminder, aes(x=continent)) + 
+  geom_density(size=1.5, alpha=0.5) #add line thickness, fill color and set color transparency
+
+ggplot(data=gapminder, aes(x=continent, fill=continent)) + #adding the aesthetic fill to see the difference among continent
+  geom_density(alpha=0.3)
 
 
 #2.  plot GDP on a log scale
 
+ggplot(data=gapminder, aes(x=gdpPercap,fill=continent) + 
+  geom_density(size=1.5, alpha=0.5)
+
+ggplot(data=gapminder, aes(x=log10(gdpPercap),fill=continent)) + 
+  geom_density(size=1.5, alpha=0.5)
+  
+  
+
+
+
 #3. Make boxplots of gdpPercap by continent
+
+
 
 #4. Do the same, but plot GDP on a log scale
 
