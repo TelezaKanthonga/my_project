@@ -13,6 +13,8 @@ table(gapminder$continent, gapminder$year)
 with(gapminder, {table(continent, year)})#with makes variables in a data set available directly
 ##with(gapminder, (table(continent, year
 
+
+
 #***************1D plots: Bar plots for discrete variables***************
 ggplot(gapminder, aes(x=continent)) + geom_bar() #to see just distributions of continent,we only specify x axis and y axis will be count by default
 
@@ -36,36 +38,47 @@ mybar + coord_flip()  #flip axis and make bar horizontal,now x ais will have num
 mybar + coord_polar() #stacked bar in polar coordinates,transform bar to polar coordinates
 #mybar + coord_polar(x ="sqrt")
 
-#***************1D plots: density plots for continuous variables***************
 
+
+#***************1D plots: density plots for continuous variables***************
+#density plot,we can eiyher use line chart or area chart
 ggplot(data=gapminder, aes(x=lifeExp)) + #plotting the continuous variable lifeExp
   geom_density()   # calculate and plot the smoothed frequency distribution of lifeExp
 
 ggplot(data=gapminder, aes(x=lifeExp)) + 
   geom_density(size=1.5, fill="pink", alpha=0.5) #add line thickness, fill color and set color transparency
 
+#Distribution of life expect by continent
 ggplot(data=gapminder, aes(x=lifeExp, fill=continent)) +
     geom_density(alpha=0.3)
 
 
+#Histogram
 ggplot(data=gapminder, aes(x=lifeExp)) + 
-  geom_histogram(aes(y=..density..), binwidth=4, color="black", fill="lightblue", alpha=0.5) # using histogram
+  geom_histogram(aes(y=..density..), binwidth=4, color="black", fill="lightblue", alpha=0.5) # using histogram,used to show frequency of variable/data
 
 #lifeExp is a bimodal variable, the plot look weird and need more clarification
 #need more aesthetic to be more clear
 ggplot(data=gapminder, aes(x=lifeExp, fill=continent)) + #adding the aesthetic fill to see the difference among continent
   geom_density(alpha=0.3)
 
-#***************boxplots and other visual summaries***************
+
+
+#***************boxplots and other visual summaries***************more used for statistical analysis
 gap1 <- ggplot(data=gapminder, aes(x=continent, y=lifeExp, fill=continent)) #change the aesthetic to show continent on one axis, and life expectancy (lifeExp) on the other.
 gap1 +
   geom_boxplot(outlier.size=2) #add a boxplot layer
 
-#*******YOUR TURN**********
+
+
+#*******Challenge**********
 #1. Remove the legend from this plot
-
+gap1 <- ggplot(data=gapminder, aes(x=continent, y=lifeExp, fill=continent)) #change the aesthetic to show continent on one axis, and life expectancy (lifeExp) on the other.
+gap1 <- gap1 +
+  geom_boxplot(outlier.size=2) 
+  guides(fill="none")
 #2. Also, make the plot horizontal
-
+  gap1 + coord_flip()
 #3. Instead of a boxplot, try geom_violin()
 
 
@@ -86,6 +99,7 @@ ggplot(data=gapminder, aes(x=gdpPercap)) +
 
 #*******YOUR TURN**********
 #1. As we did for lifeExp plot the distributions separately for each continent
+
 
 #2.  plot GDP on a log scale
 
