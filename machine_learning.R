@@ -128,6 +128,19 @@ predictTrain <- predict(model_glm, trainData, type = "response")
 train_mat <- table(trainData$Loan_status, predictTrain >= 0.5)
                                   
 train_mat                              
+
+#predictions on the test set
+predictTest <- predict(model_glm, testData, type ="response")
                                   
-                                  
-              
+#Confusion matrix on test data
+test_mat <- table(testData$Loan_status, predictTest >= 0.5)
+
+test_mat               
+
+
+
+accuracy_train <- sum(diag(train_mat)) /sum(train_mat)
+accuracy_train
+
+accuracy_test <- sum(diag(test_mat)) /sum(test_mat)
+accuracy_test
